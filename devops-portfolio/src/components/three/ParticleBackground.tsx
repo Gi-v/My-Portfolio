@@ -1,67 +1,15 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-export default function ParticleBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    let animId: number;
-    let particles: Array<{ x: number; y: number; vx: number; vy: number; radius: number; }> = [];
-
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const init = () => {
-      particles = [];
-      const count = Math.min(50, Math.floor(window.innerWidth / 25));
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
-          radius: Math.random() * 1.5 + 0.5,
-        });
-      }
-    };
-    init();
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 160) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(59,130,246,${0.08 * (1 - dist / 160)})`;
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      for (const p of particles) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(59,130,246,0.2)";
-        ctx.fill();
-      }
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
-  }, []);
-
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" style={{ opacity: 0.5 }} />;
+// Aurora gradient mesh + subtle particles
+export default function AuroraBackground() {
+  return (
+    <div className="aurora" aria-hidden="true">
+      {/* TODO: Adjust colors to match your brand */}
+      <div className="aurora-blob w-[700px] h-[700px] bg-blue-200/60 top-[-10%] left-[-5%]" style={{ animationDelay:"0s" }} />
+      <div className="aurora-blob w-[500px] h-[500px] bg-violet-200/50 top-[20%] right-[-5%]" style={{ animationDelay:"-7s" }} />
+      <div className="aurora-blob w-[400px] h-[400px] bg-sky-200/40 bottom-[10%] left-[20%]" style={{ animationDelay:"-14s" }} />
+      <div className="aurora-blob w-[300px] h-[300px] bg-indigo-200/40 top-[50%] right-[30%]" style={{ animationDelay:"-4s" }} />
+    </div>
+  );
 }

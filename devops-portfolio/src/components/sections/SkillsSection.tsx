@@ -1,78 +1,69 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useScrollAnimation, fadeUp, staggerContainer } from "@/hooks/useScrollAnimation";
-import { SKILLS } from "@/lib/data";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { TOOLKIT } from "@/lib/config";
 
-const SKILL_ICONS: Record<string, string> = {
-  aws:"☁️",azure:"🌐",gcp:"🔵",k8s:"⚙️",docker:"🐳",helm:"⛵",argocd:"🔄",
-  terraform:"🏗️",ansible:"📋",pulumi:"🔧",github:"🐙",jenkins:"🔨",gitlab:"🦊",
-  tekton:"🔗",prometheus:"🔥",grafana:"📊",datadog:"🐕",elastic:"🔍",
-  python:"🐍",bash:"💻",go:"🐹",ts:"📘",
-};
+// TODO: EDIT HERE — update TOOLKIT in lib/config.ts to match your real skills
 
-function SkillBar({ name, level, icon, color }: { name: string; level: number; icon: string; color: string }) {
-  const { ref, inView } = useInView({ threshold: 0.5, triggerOnce: true });
+function ToolkitCard({ cat, i }: { cat: typeof TOOLKIT[0]; i: number }) {
+  const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });
+  const [hovered, setHovered] = useState(false);
   return (
-    <div ref={ref} className="space-y-1.5">
-      <div className="flex items-center justify-between text-sm">
-        <span className="flex items-center gap-2 text-slate-700 font-medium">
-          <span>{SKILL_ICONS[icon] || "🔧"}</span>{name}
-        </span>
-        <span className="text-slate-400 font-mono text-xs">{level}%</span>
+    <motion.div ref={ref} initial={{ opacity:0, y:30 }} animate={inView?{opacity:1,y:0}:{}}
+      transition={{ duration:0.55, delay:i*0.06, ease:[0.22,1,0.36,1] }}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      className="card card-hover p-6 cursor-default group overflow-hidden relative">
+      {/* Hover accent */}
+      <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"
+        style={{ background:`radial-gradient(circle at 50% 0%, ${cat.color}08, transparent 70%)` }} />
+
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 transition-transform group-hover:scale-110 duration-300"
+          style={{ background:`${cat.color}12`, border:`1px solid ${cat.color}20` }}>
+          {cat.icon}
+        </div>
+        <div>
+          <div className="font-display font-semibold text-slate-900 text-sm">{cat.category}</div>
+          <div className="text-xs text-slate-400 font-mono">{cat.tools.length} tools</div>
+        </div>
       </div>
-      <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: inView ? `${level}%` : 0 }}
-          transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-          className="h-full rounded-full"
-          style={{ background: `linear-gradient(90deg, ${color}, ${color}99)` }}
-        />
+
+      {/* Tool pills */}
+      <div className="flex flex-wrap gap-2">
+        {cat.tools.map(tool => (
+          <motion.span key={tool}
+            whileHover={{ scale:1.05 }}
+            className="text-xs font-mono px-3 py-1.5 rounded-full transition-all cursor-default"
+            style={{ background:`${cat.color}0f`, color: hovered ? cat.color : "#475569", border:`1px solid ${cat.color}18` }}>
+            {tool}
+          </motion.span>
+        ))}
       </div>
-    </div>
+
+      {/* Bottom accent line */}
+      <div className="absolute bottom-0 left-0 h-0.5 transition-all duration-500 rounded-b-2xl"
+        style={{ width: hovered ? "100%" : "0%", background:`linear-gradient(90deg, ${cat.color}, transparent)` }} />
+    </motion.div>
   );
 }
 
 export default function SkillsSection() {
-  const { ref, controls } = useScrollAnimation();
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const displayed = activeCategory ? SKILLS.filter((s) => s.category === activeCategory) : SKILLS;
-
+  const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });
   return (
     <section id="skills" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.div ref={ref} initial="hidden" animate={controls} variants={fadeUp} className="text-center mb-12 space-y-4">
-          <div className="font-mono text-sm text-blue-600 tracking-widest uppercase">Technical Skills</div>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-slate-900">The DevOps Toolkit</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Proficiency across the full cloud-native stack — from infrastructure provisioning to application observability.</p>
+      <div className="max-w-6xl mx-auto">
+        <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}}
+          transition={{ duration:0.6 }} className="text-center mb-16">
+          <div className="section-label mb-3">Expertise</div>
+          <h2 className="section-title text-4xl sm:text-5xl mb-4">Technical Toolkit</h2>
+          <p className="text-slate-500 max-w-xl mx-auto">The full stack of tools and technologies I use to design, build, secure, and operate cloud-native systems.</p>
         </motion.div>
 
-        <motion.div initial="hidden" animate={controls} variants={fadeUp} className="flex flex-wrap justify-center gap-2 mb-10">
-          <button onClick={() => setActiveCategory(null)} className={`px-4 py-1.5 rounded-full text-sm font-mono transition-all ${!activeCategory ? "bg-blue-600 text-white shadow-sm" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}>All</button>
-          {SKILLS.map((s) => (
-            <button key={s.category} onClick={() => setActiveCategory(s.category === activeCategory ? null : s.category)}
-              className={`px-4 py-1.5 rounded-full text-sm font-mono transition-all ${activeCategory === s.category ? "text-white shadow-sm" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
-              style={activeCategory === s.category ? { background: s.color } : {}}>
-              {s.category}
-            </button>
-          ))}
-        </motion.div>
-
-        <motion.div initial="hidden" animate={controls} variants={staggerContainer} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {displayed.map((category) => (
-            <motion.div key={category.category} variants={fadeUp} className="glass glass-hover rounded-2xl p-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-8 rounded-full" style={{ background: category.color }} />
-                <h3 className="font-display font-semibold text-slate-900">{category.category}</h3>
-              </div>
-              <div className="space-y-4">
-                {category.items.map((skill) => <SkillBar key={skill.name} {...skill} color={category.color} />)}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {TOOLKIT.map((cat, i) => <ToolkitCard key={cat.category} cat={cat} i={i} />)}
+        </div>
       </div>
     </section>
   );

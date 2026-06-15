@@ -1,188 +1,196 @@
 # 🚀 DevOps Portfolio — Alex Chen
 
-A production-grade, premium DevOps Engineer portfolio built with **Next.js 15**, **React 19**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**. Designed to impress recruiters, hiring managers, and tech leads.
+> A living, dynamic portfolio platform for senior DevOps & Cloud Engineers. Built with Next.js 15, React 18, TypeScript, Tailwind CSS, Framer Motion, and GSAP.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss)
+![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+---
 
 ## ✨ Features
 
-- 🎨 **Premium dark theme** inspired by Vercel, Stripe, Linear, and Raycast
-- 🖥️ **Animated terminal** with real DevOps commands (kubectl, terraform, docker, argocd)
-- 📊 **Interactive SVG architecture diagrams** for Kubernetes, CI/CD, and Terraform workflows
-- 🎞️ **Smooth animations** via Framer Motion with scroll-triggered reveals
-- 🌐 **Particle network background** built with Canvas API
-- 📱 **Fully responsive** — mobile, tablet, and desktop
-- ♿ **Accessibility compliant** — semantic HTML, ARIA labels
-- 🔍 **SEO optimized** — metadata, Open Graph, JSON-LD structured data
+- 🎨 **Premium light theme** — clean, elegant, professional
+- 🌅 **Aurora animated background** — subtle gradient mesh reacts to scroll
+- 🎬 **GSAP cinematic hero** — staggered character-level entrance animations
+- 📊 **Live GitHub stats** — real API data with loading skeletons and fallbacks
+- 🗺️ **3 interactive SVG architecture diagrams** — animated flow visualizations
+- 🧰 **Comprehensive Toolkit section** — 10 categories, hover micro-interactions
+- 📅 **Clean experience timeline** — alternating cards, short impact-focused bullets
+- 📱 **Fully responsive** — mobile, tablet, desktop
+- ♿ **Accessible** — semantic HTML, ARIA labels, keyboard navigation
 - ⚡ **Performance optimized** — Lighthouse 95+
 
-## 📁 Project Structure
+---
+
+## 🗂️ Folder Structure
 
 ```
-devops-portfolio/
-├── src/
-│   ├── app/
-│   │   ├── globals.css          # Design tokens, animations
-│   │   ├── layout.tsx           # Root layout + metadata
-│   │   └── page.tsx             # Main page composition
-│   ├── components/
-│   │   ├── Navbar.tsx           # Sticky navigation
-│   │   ├── Footer.tsx           # Footer
-│   │   ├── three/
-│   │   │   └── ParticleBackground.tsx  # Canvas particle network
-│   │   └── sections/
-│   │       ├── HeroSection.tsx          # Hero + terminal animation
-│   │       ├── AboutSection.tsx         # About + highlights
-│   │       ├── SkillsSection.tsx        # Skills with progress bars
-│   │       ├── ArchitectureSection.tsx  # SVG infrastructure diagrams
-│   │       ├── ExperienceSection.tsx    # Timeline
-│   │       ├── ProjectsSection.tsx      # Project cards
-│   │       ├── CertificationsSection.tsx
-│   │       ├── GitHubSection.tsx        # GitHub stats + contribution graph
-│   │       ├── BlogSection.tsx          # Article cards
-│   │       └── ContactSection.tsx       # Contact form
-│   ├── hooks/
-│   │   └── useScrollAnimation.ts  # Framer Motion scroll hooks
-│   └── lib/
-│       ├── data.ts             # All portfolio content
-│       └── utils.ts            # Utility functions
-├── public/                     # Static assets (place resume.pdf here)
-├── Dockerfile                  # Multi-stage Docker build
-├── docker-compose.yml
-├── vercel.json
-├── netlify.toml
-├── tailwind.config.ts
-└── next.config.ts
+src/
+├── app/
+│   ├── globals.css          ← Design tokens, aurora, shimmer
+│   ├── layout.tsx           ← Root layout + SEO metadata
+│   └── page.tsx             ← Page composition
+├── components/
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   ├── three/
+│   │   └── ParticleBackground.tsx   ← Aurora gradient mesh
+│   └── sections/
+│       ├── HeroSection.tsx          ← GSAP entrance + terminal
+│       ├── AboutSection.tsx         ← Strengths grid
+│       ├── ExperienceSection.tsx    ← Alternating timeline
+│       ├── ProjectsSection.tsx      ← Project cards
+│       ├── SkillsSection.tsx        ← 10-category toolkit
+│       ├── ArchitectureSection.tsx  ← 3 SVG diagrams
+│       ├── CertificationsSection.tsx
+│       ├── GitHubSection.tsx        ← Live GitHub API
+│       ├── BlogSection.tsx
+│       └── ContactSection.tsx
+├── hooks/
+│   └── useScrollAnimation.ts
+└── lib/
+    ├── config.ts            ← ⭐ ALL personal data lives here
+    ├── hooks/
+    │   └── useGitHub.ts     ← Live GitHub data hook
+    └── utils.ts
 ```
+
+---
 
 ## 🛠️ Quick Start
 
-### Prerequisites
-- Node.js 22+
-- npm or yarn
+```bash
+git clone https://github.com/your-username/devops-portfolio
+cd devops-portfolio
+npm install
+npm run dev
+# → http://localhost:3000
+```
 
-### Installation
+---
+
+## ⚙️ Configuration Guide
+
+**Everything personal lives in one file: `src/lib/config.ts`**
+
+Open it and follow the `// TODO:` comments:
+
+| Section | What to edit |
+|---------|-------------|
+| `PERSONAL` | Name, title, bio, location, email |
+| `SOCIAL` | GitHub, LinkedIn, Twitter, Dev.to, resume path |
+| `PROFILE_IMAGE` | Path to your photo in `/public/` |
+| `GITHUB_USERNAME` | Your GitHub handle for live stats |
+| `HERO_STATS` | Your key numbers |
+| `TERMINAL_LINES` | Commands shown in hero terminal |
+| `EXPERIENCE` | Work history — max 3 bullets per role |
+| `PROJECTS` | Featured projects |
+| `CERTIFICATIONS` | Your certs |
+| `TOOLKIT` | Skills by category |
+| `BLOG_POSTS` | Articles or connect to Dev.to API |
+
+---
+
+## 🖼️ Adding Your Profile Photo
+
+1. Drop your photo at `public/profile.jpg`
+2. Update `PROFILE_IMAGE = "/profile.jpg"` in `lib/config.ts`
+3. Recommended: 400×400px, square, good lighting
+
+---
+
+## 📄 Adding Your Resume
+
+Drop your PDF at `public/resume.pdf`. The Resume button and download link will use it automatically.
+
+---
+
+## 🐙 GitHub Live Integration
+
+The GitHub section fetches real data. For higher rate limits:
 
 ```bash
-# Clone the repo
-git clone https://github.com/yourusername/devops-portfolio.git
-cd devops-portfolio
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+# .env.local
+NEXT_PUBLIC_GITHUB_TOKEN=ghp_your_token_here
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it.
+**Without a token:** falls back to static placeholder data gracefully.
 
-## 🎨 Customization
-
-**All portfolio content lives in `src/lib/data.ts`** — edit it to make the site your own:
-
-```ts
-// Personal info
-export const PERSONAL = {
-  name: "Your Name",
-  title: "Senior DevOps & Cloud Engineer",
-  email: "you@yourdomain.com",
-  github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourprofile",
-  // ...
-};
-
-// Skills, experience, projects, certs, blog posts — all here
-```
+---
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
-
 ```bash
-npm i -g vercel
-vercel --prod
+npx vercel --prod
 ```
-
 Or connect your GitHub repo at [vercel.com/new](https://vercel.com/new).
 
 ### Netlify
-
 ```bash
-npm i -g netlify-cli
 npm run build
-netlify deploy --prod --dir=.next
+npx netlify deploy --prod --dir=.next
 ```
 
 ### Docker
-
 ```bash
-# Build image
-docker build -t devops-portfolio .
-
-# Run container
-docker run -p 3000:3000 devops-portfolio
-
-# Or with Docker Compose
+docker build -t portfolio .
+docker run -p 3000:3000 portfolio
+# or:
 docker-compose up -d
 ```
 
-## ⚙️ Environment Variables
+---
 
-Copy `.env.example` to `.env.local` and fill in values:
+## 🔌 API Integrations
 
-```bash
-cp .env.example .env.local
-```
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NEXT_PUBLIC_SITE_URL` | Yes | Your site URL for OG tags |
-| `RESEND_API_KEY` | No | Email service for contact form |
-| `NEXT_PUBLIC_GA_ID` | No | Google Analytics |
-| `GITHUB_TOKEN` | No | For live GitHub stats |
-
-## 📋 Sections
-
-| Section | Description |
-|---------|-------------|
-| Hero | Name, title, animated terminal, social links, availability |
-| About | Professional summary, key strengths |
-| Skills | Progress bars by category (Cloud, K8s, IaC, CI/CD, Observability, Languages) |
-| Architecture | Interactive SVG diagrams: K8s, CI/CD pipeline, Terraform workflow |
-| Experience | Animated timeline with metrics |
-| Projects | Cards with metrics, tags, GitHub links |
-| Certifications | Badge grid (AWS, CKA, CKS, Terraform, Azure, GCP) |
-| GitHub | Contribution graph, repo highlights, stats |
-| Blog | Article cards with tags and reading time |
-| Contact | Form + social links + resume download |
-
-## 📦 Adding Your Resume
-
-Place your PDF resume at `public/resume.pdf`. The download button will automatically use it.
-
-## 🏗️ Tech Stack
-
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| Next.js | 15.1 | Framework + SSG/SSR |
-| React | 19 | UI Library |
-| TypeScript | 5.7 | Type safety |
-| Tailwind CSS | 3.4 | Styling |
-| Framer Motion | 11 | Animations |
-| react-type-animation | 3.2 | Typewriter effect |
-| react-intersection-observer | 9 | Scroll detection |
-| Lucide React | 0.468 | Icons |
-| Sonner | 1.7 | Toast notifications |
-
-## 📄 License
-
-MIT — use freely for your own portfolio.
+| Service | Status | Config |
+|---------|--------|--------|
+| GitHub Stats | ✅ Live | `GITHUB_USERNAME` in config.ts |
+| GitHub Repos | ✅ Live | `GITHUB_USERNAME` in config.ts |
+| Contact Form | 🔧 Mock | Add `/api/contact` route + Resend/SendGrid |
+| Dev.to Articles | 🔧 Static | Replace `BLOG_POSTS` with `fetch("https://dev.to/api/articles?username=X")` |
+| LeetCode Stats | 📋 Planned | Add `useLeeetCode` hook pattern from `useGitHub` |
 
 ---
 
-Built with ❤️ and ☕ by a DevOps engineer who believes infrastructure should be beautiful too.
+## 🎨 Customization
+
+### Change accent color (blue → your brand)
+In `globals.css`, find `--primary: 221 83% 53%` and update the HSL values.
+Also update `bg-blue-600`, `text-blue-600` across components.
+
+### Add a new section
+1. Create `src/components/sections/NewSection.tsx`
+2. Add data to `src/lib/config.ts`
+3. Import and add to `src/app/page.tsx`
+
+### Remove a section
+Delete the import and `<SectionName />` line in `src/app/page.tsx`.
+
+---
+
+## 📦 Tech Stack
+
+| Tech | Version | Purpose |
+|------|---------|---------|
+| Next.js | 15.1 | Framework |
+| React | 18.3 | UI |
+| TypeScript | 5.7 | Type safety |
+| Tailwind CSS | 3.4 | Styling |
+| Framer Motion | 11 | Scroll animations |
+| GSAP | 3.12 | Hero entrance |
+| react-type-animation | 3.2 | Typewriter |
+| react-intersection-observer | 9 | Scroll triggers |
+| Sonner | 1.7 | Toasts |
+| Lucide React | 0.468 | Icons |
+
+---
+
+## 📄 License
+
+MIT — free for personal and commercial use.

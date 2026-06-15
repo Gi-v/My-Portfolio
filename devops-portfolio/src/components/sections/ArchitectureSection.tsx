@@ -1,177 +1,222 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useScrollAnimation, fadeUp } from "@/hooks/useScrollAnimation";
+import { useInView } from "react-intersection-observer";
 
-type Tab = "k8s" | "cicd" | "terraform";
-const TABS: { id: Tab; label: string; emoji: string }[] = [
-  { id: "k8s", label: "Kubernetes Architecture", emoji: "⚙️" },
-  { id: "cicd", label: "CI/CD Pipeline", emoji: "🔄" },
-  { id: "terraform", label: "Terraform Workflow", emoji: "🏗️" },
+// TODO: Customize the architecture diagrams to reflect your real infrastructure
+
+type Tab = "platform" | "cicd" | "gitops";
+const TABS: { id:Tab; label:string; desc:string }[] = [
+  { id:"platform", label:"Cloud Platform",   desc:"Multi-cloud Kubernetes platform with service mesh and policy engine" },
+  { id:"cicd",     label:"CI/CD Pipeline",   desc:"SLSA Level 3 compliant pipeline with signed artifacts" },
+  { id:"gitops",   label:"GitOps Flow",      desc:"Declarative ArgoCD-driven deployment with drift detection" },
 ];
 
-function K8sDiagram() {
+/* ── Platform Diagram ───────────────────────────────────── */
+function PlatformDiagram() {
+  const nodes = [
+    { id:"user",  x:60,  y:200, w:90,  h:56, label:"Developers", sub:"kubectl / UI",  color:"#2563eb", emoji:"👩‍💻" },
+    { id:"lb",    x:210, y:200, w:90,  h:56, label:"Ingress",     sub:"AWS ALB",       color:"#7c3aed", emoji:"⚖️" },
+    { id:"mesh",  x:360, y:200, w:90,  h:56, label:"Service Mesh",sub:"Istio/Cilium",  color:"#0891b2", emoji:"🔀" },
+    { id:"svc1",  x:510, y:100, w:80,  h:50, label:"API Pods",    sub:"3 replicas",    color:"#059669", emoji:"📦" },
+    { id:"svc2",  x:510, y:200, w:80,  h:50, label:"Worker Pods", sub:"autoscaled",    color:"#059669", emoji:"📦" },
+    { id:"svc3",  x:510, y:300, w:80,  h:50, label:"DB Proxy",    sub:"PGBouncer",     color:"#d97706", emoji:"🗄️" },
+    { id:"obs",   x:650, y:200, w:90,  h:56, label:"Observability",sub:"Prom/Grafana", color:"#E6522C", emoji:"📊" },
+  ];
+  const edges = [
+    { from:{x:152,y:228}, to:{x:208,y:228} },
+    { from:{x:302,y:228}, to:{x:358,y:228} },
+    { from:{x:452,y:200}, to:{x:508,y:130} },
+    { from:{x:452,y:228}, to:{x:508,y:228} },
+    { from:{x:452,y:248}, to:{x:508,y:320} },
+    { from:{x:592,y:228}, to:{x:648,y:228} },
+  ];
   return (
-    <svg viewBox="0 0 800 420" className="w-full h-auto" aria-label="Kubernetes Architecture">
+    <svg viewBox="0 0 800 430" className="w-full h-auto">
       <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L9,3 z" fill="#2563eb" opacity="0.6" />
+        <marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8" />
         </marker>
       </defs>
-      <rect x="10" y="180" width="100" height="60" rx="8" fill="#f8fafc" stroke="#2563eb" strokeWidth="1" strokeOpacity="0.3" />
-      <text x="60" y="210" textAnchor="middle" fill="#64748b" fontSize="11" fontFamily="JetBrains Mono">Users</text>
-      <text x="60" y="227" textAnchor="middle" fill="#2563eb" fontSize="18">🌐</text>
-      <rect x="155" y="165" width="110" height="90" rx="8" fill="#f8fafc" stroke="#2563eb" strokeWidth="1.5" strokeOpacity="0.5" />
-      <text x="210" y="200" textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="JetBrains Mono">Load Balancer</text>
-      <text x="210" y="222" textAnchor="middle" fill="#2563eb" fontSize="18">⚖️</text>
-      <text x="210" y="244" textAnchor="middle" fill="#2563eb" fontSize="9" fontFamily="JetBrains Mono">AWS ALB</text>
-      <rect x="315" y="155" width="120" height="110" rx="8" fill="#f8fafc" stroke="#7c3aed" strokeWidth="1.5" strokeOpacity="0.5" />
-      <text x="375" y="185" textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="JetBrains Mono">Ingress</text>
-      <text x="375" y="200" textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="JetBrains Mono">Controller</text>
-      <text x="375" y="225" textAnchor="middle" fill="#7c3aed" fontSize="18">🔀</text>
-      <text x="375" y="250" textAnchor="middle" fill="#7c3aed" fontSize="9" fontFamily="JetBrains Mono">nginx/traefik</text>
-      {[0,1,2].map((i) => (
+      {edges.map((e,i) => (
         <g key={i}>
-          <rect x={490+i*90} y="80" width="80" height="70" rx="6" fill="#f0fdf4" stroke="#059669" strokeWidth="1" strokeOpacity="0.4" />
-          <text x={530+i*90} y="107" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="JetBrains Mono">Pod</text>
-          <text x={530+i*90} y="130" textAnchor="middle" fill="#059669" fontSize="16">📦</text>
-          <text x={530+i*90} y="143" textAnchor="middle" fill="#059669" fontSize="8" fontFamily="JetBrains Mono">svc-{i+1}</text>
+          <line x1={e.from.x} y1={e.from.y} x2={e.to.x} y2={e.to.y} stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="4 3" markerEnd="url(#a)" />
+          <circle r="3.5" fill="#2563eb" opacity="0.75">
+            <animateMotion dur={`${1.8+i*0.35}s`} repeatCount="indefinite" begin={`${i*0.5}s`}>
+              <mpath href={`#ep${i}`} />
+            </animateMotion>
+          </circle>
+          <path id={`ep${i}`} d={`M ${e.from.x},${e.from.y} L ${e.to.x},${e.to.y}`} fill="none" />
         </g>
       ))}
-      {[0,1,2].map((i) => (
-        <g key={i}>
-          <rect x={490+i*90} y="270" width="80" height="70" rx="6" fill="#fff7ed" stroke="#d97706" strokeWidth="1" strokeOpacity="0.4" />
-          <text x={530+i*90} y="297" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="JetBrains Mono">Pod</text>
-          <text x={530+i*90} y="320" textAnchor="middle" fill="#d97706" fontSize="16">📦</text>
-          <text x={530+i*90} y="333" textAnchor="middle" fill="#d97706" fontSize="8" fontFamily="JetBrains Mono">api-{i+1}</text>
+      {nodes.map(n => (
+        <g key={n.id}>
+          <rect x={n.x} y={n.y-28} width={n.w} height={n.h} rx="10" fill="white" stroke={n.color} strokeWidth="1.5" strokeOpacity="0.4"
+            style={{ filter:"drop-shadow(0 2px 8px rgba(0,0,0,0.06))" }} />
+          <text x={n.x+n.w/2} y={n.y-6} textAnchor="middle" fontSize="18">{n.emoji}</text>
+          <text x={n.x+n.w/2} y={n.y+13} textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="Syne,sans-serif" fontWeight="600">{n.label}</text>
+          <text x={n.x+n.w/2} y={n.y+24} textAnchor="middle" fill={n.color} fontSize="8.5" fontFamily="JetBrains Mono,monospace">{n.sub}</text>
         </g>
       ))}
-      <rect x="315" y="320" width="120" height="80" rx="8" fill="#fefce8" stroke="#ca8a04" strokeWidth="1.5" strokeOpacity="0.4" />
-      <text x="375" y="352" textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="JetBrains Mono">Control Plane</text>
-      <text x="375" y="372" textAnchor="middle" fill="#ca8a04" fontSize="16">🎛️</text>
-      <text x="375" y="390" textAnchor="middle" fill="#ca8a04" fontSize="8" fontFamily="JetBrains Mono">API Server</text>
-      <line x1="110" y1="210" x2="153" y2="210" stroke="#2563eb" strokeWidth="1.5" strokeOpacity="0.5" markerEnd="url(#arrow)" />
-      <line x1="265" y1="210" x2="313" y2="210" stroke="#2563eb" strokeWidth="1.5" strokeOpacity="0.5" markerEnd="url(#arrow)" />
-      <line x1="435" y1="185" x2="488" y2="130" stroke="#7c3aed" strokeWidth="1" strokeOpacity="0.4" markerEnd="url(#arrow)" />
-      <line x1="435" y1="225" x2="488" y2="300" stroke="#7c3aed" strokeWidth="1" strokeOpacity="0.4" markerEnd="url(#arrow)" />
-      <circle r="4" fill="#2563eb" opacity="0.8"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#f1"/></animateMotion></circle>
-      <path id="f1" d="M 110,210 L 310,210" fill="none"/>
-      <circle r="3" fill="#7c3aed" opacity="0.7"><animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s"><mpath href="#f2"/></animateMotion></circle>
-      <path id="f2" d="M 435,185 L 488,130" fill="none"/>
-      <rect x="10" y="360" width="140" height="50" rx="6" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" />
-      <text x="25" y="378" fill="#94a3b8" fontSize="9" fontFamily="JetBrains Mono">🟢 Services (svc)</text>
-      <text x="25" y="393" fill="#94a3b8" fontSize="9" fontFamily="JetBrains Mono">🟠 APIs  🟡 Control</text>
+      {/* Legend */}
+      <rect x="20" y="380" width="180" height="36" rx="6" fill="white" stroke="#e2e8f0" strokeWidth="1" />
+      <text x="35" y="396" fill="#64748b" fontSize="9" fontFamily="JetBrains Mono,monospace">🟢 Services   🟠 Storage   🔵 Control</text>
+      <text x="35" y="408" fill="#94a3b8" fontSize="8" fontFamily="JetBrains Mono,monospace">Animated flow indicates live traffic</text>
     </svg>
   );
 }
 
+/* ── CI/CD Diagram ──────────────────────────────────────── */
 function CICDDiagram() {
   const steps = [
-    { label: "Code Push", icon: "💻", color: "#2563eb" },
-    { label: "GitHub\nActions", icon: "🐙", color: "#7c3aed" },
-    { label: "Build &\nTest", icon: "🔨", color: "#d97706" },
-    { label: "Scan &\nSign", icon: "🔒", color: "#db2777" },
-    { label: "Push\nImage", icon: "📦", color: "#059669" },
-    { label: "ArgoCD\nSync", icon: "🔄", color: "#2563eb" },
-    { label: "Deploy\nProd", icon: "🚀", color: "#ca8a04" },
+    { label:"Code",    icon:"💻", color:"#2563eb",  sub:"Push" },
+    { label:"Build",   icon:"🔨", color:"#7c3aed",  sub:"Actions" },
+    { label:"Test",    icon:"🧪", color:"#0891b2",  sub:"487 tests" },
+    { label:"Scan",    icon:"🔒", color:"#dc2626",  sub:"Trivy/SAST" },
+    { label:"Sign",    icon:"🔏", color:"#059669",  sub:"Cosign" },
+    { label:"Publish", icon:"📦", color:"#d97706",  sub:"GHCR" },
+    { label:"Deploy",  icon:"🚀", color:"#2563eb",  sub:"ArgoCD" },
   ];
   return (
-    <svg viewBox="0 0 800 200" className="w-full h-auto" aria-label="CI/CD Pipeline">
-      <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#2563eb" opacity="0.5"/></marker></defs>
-      {steps.map((step, i) => {
-        const x = 50 + i * 104;
+    <svg viewBox="0 0 820 220" className="w-full h-auto">
+      <defs>
+        <marker id="ca" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#2563eb" opacity="0.5" />
+        </marker>
+      </defs>
+      {steps.map((s, i) => {
+        const x = 30 + i * 110;
         return (
-          <g key={step.label}>
-            <rect x={x} y="60" width="85" height="80" rx="10" fill="#f8fafc" stroke={step.color} strokeWidth="1.5" strokeOpacity="0.5" />
-            <text x={x+42} y="90" textAnchor="middle" fontSize="22">{step.icon}</text>
-            {step.label.split("\n").map((l, li) => <text key={li} x={x+42} y={108+li*13} textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="JetBrains Mono">{l}</text>)}
-            {i < steps.length - 1 && (
+          <g key={s.label}>
+            <rect x={x} y="60" width="90" height="84" rx="12" fill="white" stroke={s.color} strokeWidth="1.5" strokeOpacity="0.4"
+              style={{ filter:"drop-shadow(0 2px 8px rgba(0,0,0,0.05))" }} />
+            <text x={x+45} y="93" textAnchor="middle" fontSize="24">{s.icon}</text>
+            <text x={x+45} y="116" textAnchor="middle" fill="#0f172a" fontSize="11" fontFamily="Syne,sans-serif" fontWeight="600">{s.label}</text>
+            <text x={x+45} y="130" textAnchor="middle" fill={s.color} fontSize="8.5" fontFamily="JetBrains Mono,monospace">{s.sub}</text>
+            {i < steps.length-1 && (
               <>
-                <line x1={x+86} y1="100" x2={x+102} y2="100" stroke="#2563eb" strokeWidth="1.5" strokeOpacity="0.4" markerEnd="url(#arr)" strokeDasharray="3 2" />
-                <circle r="3" fill={step.color} opacity="0.8"><animateMotion dur={`${1.5+i*0.3}s`} repeatCount="indefinite" begin={`${i*0.4}s`}><mpath href={`#p${i}`}/></animateMotion></circle>
-                <path id={`p${i}`} d={`M ${x+86},100 L ${x+102},100`} fill="none"/>
+                <line x1={x+91} y1="102" x2={x+108} y2="102" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="3 2" markerEnd="url(#ca)" />
+                <circle r="3.5" fill={s.color} opacity="0.8">
+                  <animateMotion dur={`${1.5+i*0.2}s`} repeatCount="indefinite" begin={`${i*0.35}s`}>
+                    <mpath href={`#cp${i}`} />
+                  </animateMotion>
+                </circle>
+                <path id={`cp${i}`} d={`M ${x+91},102 L ${x+108},102`} fill="none" />
               </>
             )}
           </g>
         );
       })}
-      <text x="400" y="165" textAnchor="middle" fill="#059669" fontSize="11" fontFamily="JetBrains Mono">✓ Build: 2m 34s  ✓ Tests: 487 passed  ✓ Scan: 0 CVEs  ✓ Deploy: success</text>
+      <text x="410" y="175" textAnchor="middle" fill="#059669" fontSize="11" fontFamily="JetBrains Mono,monospace">
+        ✓ SLSA Level 3 compliant  ·  ✓ Signed artifacts  ·  ✓ Zero CVE escapes
+      </text>
     </svg>
   );
 }
 
-function TerraformDiagram() {
-  const phases = [
-    { label: "Write", sub: ".tf files", icon: "📝", color: "#7B42BC", x: 80, y: 150 },
-    { label: "Plan", sub: "terraform plan", icon: "📋", color: "#2563eb", x: 250, y: 150 },
-    { label: "Review", sub: "PR + Atlantis", icon: "👀", color: "#d97706", x: 420, y: 150 },
-    { label: "Apply", sub: "terraform apply", icon: "⚡", color: "#059669", x: 590, y: 150 },
-  ];
+/* ── GitOps Diagram ─────────────────────────────────────── */
+function GitOpsDiagram() {
   return (
-    <svg viewBox="0 0 800 380" className="w-full h-auto" aria-label="Terraform Workflow">
-      <defs><marker id="tarr" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7B42BC" opacity="0.6"/></marker></defs>
-      <ellipse cx="640" cy="290" rx="130" ry="70" fill="#fff7ed" stroke="#f97316" strokeWidth="1" strokeOpacity="0.3" strokeDasharray="6 3" />
-      <text x="640" y="240" textAnchor="middle" fill="#f97316" fontSize="10" fontFamily="JetBrains Mono" opacity="0.6">AWS Cloud</text>
-      {[{label:"VPC",x:570,y:280},{label:"EKS",x:640,y:305},{label:"RDS",x:705,y:280}].map((r) => (
-        <g key={r.label}>
-          <rect x={r.x-20} y={r.y-14} width="40" height="24" rx="4" fill="white" stroke="#f97316" strokeWidth="0.8" strokeOpacity="0.5" />
-          <text x={r.x} y={r.y+3} textAnchor="middle" fill="#f97316" fontSize="9" fontFamily="JetBrains Mono">{r.label}</text>
+    <svg viewBox="0 0 800 360" className="w-full h-auto">
+      <defs>
+        <marker id="ga" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed" opacity="0.6" />
+        </marker>
+      </defs>
+      {/* Git repo */}
+      <rect x="30"  y="140" width="110" height="80" rx="12" fill="white" stroke="#0f172a" strokeWidth="1.5" strokeOpacity="0.15" style={{filter:"drop-shadow(0 2px 8px rgba(0,0,0,0.06))"}} />
+      <text x="85"  y="172" textAnchor="middle" fontSize="26">🐙</text>
+      <text x="85"  y="196" textAnchor="middle" fill="#0f172a" fontSize="11" fontFamily="Syne,sans-serif" fontWeight="600">Git Repo</text>
+      <text x="85"  y="210" textAnchor="middle" fill="#64748b" fontSize="8.5" fontFamily="JetBrains Mono,monospace">infra-configs</text>
+
+      {/* ArgoCD */}
+      <rect x="220" y="140" width="110" height="80" rx="12" fill="white" stroke="#7c3aed" strokeWidth="1.5" strokeOpacity="0.4" style={{filter:"drop-shadow(0 2px 8px rgba(124,58,237,0.1))"}} />
+      <text x="275" y="172" textAnchor="middle" fontSize="26">🔄</text>
+      <text x="275" y="196" textAnchor="middle" fill="#0f172a" fontSize="11" fontFamily="Syne,sans-serif" fontWeight="600">ArgoCD</text>
+      <text x="275" y="210" textAnchor="middle" fill="#7c3aed" fontSize="8.5" fontFamily="JetBrains Mono,monospace">continuous sync</text>
+
+      {/* Clusters */}
+      {[
+        { label:"Prod Cluster",  sub:"us-east-1",  color:"#059669", x:440, y:80  },
+        { label:"Stage Cluster", sub:"us-west-2",  color:"#2563eb", x:440, y:180 },
+        { label:"Dev Cluster",   sub:"eu-west-1",  color:"#d97706", x:440, y:280 },
+      ].map(c => (
+        <g key={c.label}>
+          <rect x={c.x} y={c.y} width="120" height="70" rx="10" fill="white" stroke={c.color} strokeWidth="1.5" strokeOpacity="0.4" style={{filter:"drop-shadow(0 2px 6px rgba(0,0,0,0.05))"}} />
+          <text x={c.x+60} y={c.y+28} textAnchor="middle" fontSize="20">⚙️</text>
+          <text x={c.x+60} y={c.y+47} textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="Syne,sans-serif" fontWeight="600">{c.label}</text>
+          <text x={c.x+60} y={c.y+59} textAnchor="middle" fill={c.color} fontSize="8.5" fontFamily="JetBrains Mono,monospace">{c.sub}</text>
+          {/* ArgoCD → cluster arrows */}
+          <line x1="332" y1="180" x2={c.x} y2={c.y+35} stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="4 3" markerEnd="url(#ga)" />
+          <circle r="3.5" fill={c.color} opacity="0.75">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin={`${c.y*0.003}s`}>
+              <mpath href={`#gp${c.label}`} />
+            </animateMotion>
+          </circle>
+          <path id={`gp${c.label}`} d={`M 332,180 L ${c.x},${c.y+35}`} fill="none" />
         </g>
       ))}
-      {phases.map((p, i) => (
-        <g key={p.label}>
-          <rect x={p.x-55} y={p.y-55} width="110" height="95" rx="10" fill="#f8fafc" stroke={p.color} strokeWidth="1.5" strokeOpacity="0.5" />
-          <text x={p.x} y={p.y-22} textAnchor="middle" fontSize="26">{p.icon}</text>
-          <text x={p.x} y={p.y+4} textAnchor="middle" fill="#0f172a" fontSize="12" fontFamily="JetBrains Mono" fontWeight="600">{p.label}</text>
-          <text x={p.x} y={p.y+20} textAnchor="middle" fill="#94a3b8" fontSize="9" fontFamily="JetBrains Mono">{p.sub}</text>
-          {i < 3 && (
-            <>
-              <line x1={p.x+57} y1={p.y} x2={p.x+112} y2={p.y} stroke={p.color} strokeWidth="1.5" strokeOpacity="0.5" markerEnd="url(#tarr)" />
-              <circle r="4" fill={p.color} opacity="0.9"><animateMotion dur="2s" repeatCount="indefinite" begin={`${i*0.5}s`}><mpath href={`#tf${i}`}/></animateMotion></circle>
-              <path id={`tf${i}`} d={`M ${p.x+57},${p.y} L ${p.x+112},${p.y}`} fill="none"/>
-            </>
-          )}
-        </g>
-      ))}
-      <line x1="590" y1="175" x2="640" y2="228" stroke="#059669" strokeWidth="1.5" strokeOpacity="0.5" markerEnd="url(#tarr)" />
-      <rect x="615" y="335" width="80" height="35" rx="6" fill="white" stroke="#ca8a04" strokeWidth="1" strokeOpacity="0.5" />
-      <text x="655" y="347" textAnchor="middle" fill="#ca8a04" fontSize="9" fontFamily="JetBrains Mono">🗄️ State</text>
-      <text x="655" y="361" textAnchor="middle" fill="#94a3b8" fontSize="8" fontFamily="JetBrains Mono">S3+DynamoDB</text>
-      <text x="400" y="360" textAnchor="middle" fill="#94a3b8" fontSize="10" fontFamily="JetBrains Mono">SLSA-compliant • Atlantis PR-driven • Remote state locking</text>
+
+      {/* Git → ArgoCD */}
+      <line x1="142" y1="180" x2="218" y2="180" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="4 3" markerEnd="url(#ga)" />
+      <circle r="3.5" fill="#7c3aed" opacity="0.8"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#gpgit"/></animateMotion></circle>
+      <path id="gpgit" d="M 142,180 L 218,180" fill="none" />
+
+      {/* Drift detection loop */}
+      <path d="M 440,115 C 380,115 380,245 440,245" fill="none" stroke="#059669" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.4" />
+      <text x="365" y="185" fill="#059669" fontSize="8" fontFamily="JetBrains Mono,monospace" textAnchor="middle">drift</text>
+      <text x="365" y="196" fill="#059669" fontSize="8" fontFamily="JetBrains Mono,monospace" textAnchor="middle">detect</text>
+
+      {/* Policy engine */}
+      <rect x="630" y="145" width="110" height="70" rx="10" fill="white" stroke="#dc2626" strokeWidth="1.5" strokeOpacity="0.35" style={{filter:"drop-shadow(0 2px 6px rgba(0,0,0,0.05))"}} />
+      <text x="685" y="173" textAnchor="middle" fontSize="20">🛡️</text>
+      <text x="685" y="192" textAnchor="middle" fill="#0f172a" fontSize="10" fontFamily="Syne,sans-serif" fontWeight="600">OPA/Gatekeeper</text>
+      <text x="685" y="204" textAnchor="middle" fill="#dc2626" fontSize="8.5" fontFamily="JetBrains Mono,monospace">policy enforcement</text>
+      <line x1="562" y1="180" x2="628" y2="180" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="4 3" markerEnd="url(#ga)" />
     </svg>
   );
 }
 
-const DIAGRAM_MAP: Record<Tab, React.ComponentType> = { k8s: K8sDiagram, cicd: CICDDiagram, terraform: TerraformDiagram };
+const DIAGRAMS: Record<Tab, React.ComponentType> = { platform:PlatformDiagram, cicd:CICDDiagram, gitops:GitOpsDiagram };
 
 export default function ArchitectureSection() {
-  const { ref, controls } = useScrollAnimation();
-  const [activeTab, setActiveTab] = useState<Tab>("k8s");
-  const Diagram = DIAGRAM_MAP[activeTab];
+  const [tab, setTab] = useState<Tab>("platform");
+  const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });
+  const Diagram = DIAGRAMS[tab];
 
   return (
-    <section id="architecture" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50/60">
-      <div className="max-w-7xl mx-auto">
-        <motion.div ref={ref} initial="hidden" animate={controls} variants={fadeUp} className="text-center mb-12 space-y-4">
-          <div className="font-mono text-sm text-blue-600 tracking-widest uppercase">Infrastructure Design</div>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-slate-900">Cloud Architecture</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Interactive diagrams of real production architectures I&apos;ve designed and operated.</p>
+    <section id="architecture" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
+      <div className="max-w-6xl mx-auto">
+        <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6 }} className="text-center mb-12">
+          <div className="section-label mb-3">Architecture</div>
+          <h2 className="section-title text-4xl sm:text-5xl mb-4">Cloud Architecture</h2>
+          <p className="text-slate-500 max-w-xl mx-auto">Interactive visualizations of production infrastructure I&apos;ve designed and operated.</p>
         </motion.div>
-        <motion.div initial="hidden" animate={controls} variants={fadeUp} className="flex flex-wrap justify-center gap-2 mb-8">
-          {TABS.map((tab) => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${activeTab === tab.id ? "bg-blue-600 text-white shadow-md shadow-blue-200" : "bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:bg-blue-50"}`}>
-              <span>{tab.emoji}</span>{tab.label}
+
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {TABS.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)}
+              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${tab===t.id ? "bg-blue-600 text-white shadow-md shadow-blue-200/50" : "bg-white border border-slate-200 text-slate-600 hover:border-blue-200 hover:bg-blue-50/50"}`}>
+              {t.label}
             </button>
           ))}
-        </motion.div>
-        <motion.div initial="hidden" animate={controls} variants={fadeUp} className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm overflow-hidden">
+        </div>
+
+        {/* Tab desc */}
+        <AnimatePresence mode="wait">
+          <motion.p key={tab} initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} transition={{ duration:0.3 }}
+            className="text-center text-sm text-slate-400 font-mono mb-6">{TABS.find(t=>t.id===tab)?.desc}</motion.p>
+        </AnimatePresence>
+
+        {/* Diagram */}
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-sm overflow-hidden">
           <AnimatePresence mode="wait">
-            <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
+            <motion.div key={tab} initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-8 }} transition={{ duration:0.35 }}>
               <Diagram />
             </motion.div>
           </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
