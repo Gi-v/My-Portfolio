@@ -58,7 +58,7 @@ export default function SkillsSection() {
           transition={{ duration:0.6 }} className="text-center mb-16">
           <div className="section-label mb-3">Expertise</div>
           <h2 className="section-title text-4xl sm:text-5xl mb-4">Technical Toolkit</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">The full stack of tools and technologies I use to design, build, secure, and operate cloud-native systems.</p>
+          <p className="text-slate-500 max-w-xl mx-auto">The languages, frameworks, systems, and tools I use to build full-stack products, secure software, and research intelligent systems.</p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

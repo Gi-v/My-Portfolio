@@ -43,7 +43,6 @@ export default function HeroSection() {
   const socials = [
     { icon:Github, href:SOCIAL.github, label:"GitHub" },
     { icon:Linkedin, href:SOCIAL.linkedin, label:"LinkedIn" },
-    { icon:Twitter, href:SOCIAL.twitter, label:"Twitter" },
     { icon:Mail, href:`mailto:${PERSONAL.email}`, label:"Email" },
   ];
 
@@ -92,12 +91,11 @@ export default function HeroSection() {
               {/* Title typewriter */}
               <div style={{opacity:0}}>
                 <div className="font-mono text-sm text-blue-600 mb-3 tracking-widest uppercase">
-                  {/* TODO: Update role title */}
-                  Senior Engineer
+                  {PERSONAL.title}
                 </div>
                 <h2 className="font-display font-bold text-5xl sm:text-6xl leading-[1.04] tracking-tight text-slate-900">
                   <TypeAnimation
-                    sequence={["DevOps\nEngineer", 3000, "Cloud\nArchitect", 3000, "Platform\nEngineer", 3000]}
+                    sequence={["Software\nEngineer", 3000, "Full-Stack\nDeveloper", 3000, "Cloud &\nML Builder", 3000]}
                     repeat={Infinity}
                     speed={40}
                     style={{ whiteSpace:"pre-line" }}
@@ -153,8 +151,7 @@ export default function HeroSection() {
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
                 </div>
-                {/* TODO: Update username */}
-                <span className="font-mono text-xs text-slate-500">alex@prod ~ zsh</span>
+                <span className="font-mono text-xs text-slate-500">hareem@portfolio ~ zsh</span>
                 <div className="w-16" />
               </div>
               {/* Terminal body */}

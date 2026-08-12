@@ -46,7 +46,7 @@ export default function ProjectsSection() {
         <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6 }} className="text-center mb-16">
           <div className="section-label mb-3">Work</div>
           <h2 className="section-title text-4xl sm:text-5xl mb-4">Featured Projects</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Open-source infrastructure tools and platforms I&apos;ve built and shipped.</p>
+          <p className="text-slate-500 max-w-xl mx-auto">A selection of engineering projects spanning AI, cloud-native systems, security-aware software, and applied research.</p>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {PROJECTS.map((p, i) => <ProjectCard key={p.title} p={p} i={i} />)}

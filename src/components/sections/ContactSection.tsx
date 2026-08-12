@@ -27,12 +27,10 @@ export default function ContactSection() {
     setTimeout(() => setSent(false), 4000);
   };
 
-  // TODO: EDIT HERE — update social links, email, location
   const links = [
     { icon: Mail,     label: "Email",    value: PERSONAL.email,                  href: `mailto:${PERSONAL.email}`,  color: "#2563eb" },
-    { icon: Github,   label: "GitHub",   value: "github.com/alexchen-dev",       href: SOCIAL.github,               color: "#0f172a" },
-    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/alexchen-devops", href: SOCIAL.linkedin,           color: "#0077b5" },
-    { icon: Twitter,  label: "Twitter",  value: "@alexchen_dev",                 href: SOCIAL.twitter,              color: "#1da1f2" },
+    { icon: Github,   label: "GitHub",   value: "github.com/Gi-v",               href: SOCIAL.github,               color: "#0f172a" },
+    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/hareem-ahmad-8a7126371", href: SOCIAL.linkedin,           color: "#0077b5" },
   ];
 
   const field = "w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:border-blue-400 focus:bg-white transition-all";
@@ -45,7 +43,7 @@ export default function ContactSection() {
           <div className="section-label mb-3">Let&apos;s Connect</div>
           <h2 className="section-title text-4xl sm:text-5xl mb-4">Get In Touch</h2>
           <p className="text-slate-500 max-w-xl mx-auto">
-            Open to discussing new opportunities, architecture reviews, or just talking DevOps.
+            Open to collaboration, internship opportunities, product engineering work, and research-driven software projects.
           </p>
         </motion.div>
 
@@ -60,9 +58,8 @@ export default function ContactSection() {
                 <MapPin className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                {/* TODO: Update location */}
                 <div className="text-sm font-semibold text-slate-900">{PERSONAL.location}</div>
-                <div className="text-xs text-slate-400">Open to remote &amp; hybrid</div>
+                <div className="text-xs text-slate-400">Open to remote, hybrid, and collaborative opportunities</div>
               </div>
             </div>
 

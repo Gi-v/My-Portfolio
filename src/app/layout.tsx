@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
-// TODO: Update name, description, and URLs for your own SEO metadata
+
 export const metadata: Metadata = {
-  title: "Alex Chen | DevOps & Cloud Engineer",
-  description: "Senior DevOps Engineer — Kubernetes, Terraform, AWS/GCP/Azure, CI/CD, Platform Engineering.",
-  authors: [{ name: "Alex Chen" }],
-  openGraph: { type:"website", title:"Alex Chen | DevOps & Cloud Engineer", images:[{ url:"/og-image.png" }] },
-  twitter: { card:"summary_large_image", creator:"@alexchen_dev" },
+  title: "Hareem Ahmad | Software Engineer & Researcher",
+  description: "Software Engineering student at GIKI with experience in full-stack development, cloud-native systems, DevOps, and applied machine learning.",
+  authors: [{ name: "Hareem Ahmad" }],
+  openGraph: { type:"website", title:"Hareem Ahmad | Software Engineer & Researcher", images:[{ url:"/og-image.png" }] },
+  twitter: { card:"summary_large_image", creator:"@Gi_v" },
   robots: { index:true, follow:true },
 };
 export const viewport: Viewport = { themeColor:"#ffffff", width:"device-width", initialScale:1 };

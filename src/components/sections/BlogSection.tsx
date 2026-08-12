@@ -13,9 +13,9 @@ export default function BlogSection() {
     <section id="blog" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
       <div className="max-w-6xl mx-auto">
         <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6 }} className="text-center mb-16">
-          <div className="section-label mb-3">Writing</div>
-          <h2 className="section-title text-4xl sm:text-5xl mb-4">Articles & Insights</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Deep dives into DevOps patterns, cloud architecture, and production lessons.</p>
+          <div className="section-label mb-3">Research</div>
+          <h2 className="section-title text-4xl sm:text-5xl mb-4">Publications & Insights</h2>
+          <p className="text-slate-500 max-w-xl mx-auto">Applied research and engineering work spanning AI logistics, human-centered optimization, and intelligent systems.</p>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {BLOG_POSTS.map((p, i) => {

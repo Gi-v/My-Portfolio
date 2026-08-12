@@ -4,14 +4,13 @@ import { useInView } from "react-intersection-observer";
 import { Server, GitBranch, Shield, TrendingUp, Globe, Zap } from "lucide-react";
 import { PERSONAL } from "@/lib/config";
 
-// TODO: Edit highlights to reflect your real strengths
 const HIGHLIGHTS = [
-  { icon:Server,    color:"#2563eb", label:"Infrastructure at Scale",  desc:"Kubernetes clusters serving billions of requests/day" },
-  { icon:GitBranch, color:"#7c3aed", label:"GitOps First",             desc:"ArgoCD, Flux, and progressive delivery at every layer" },
-  { icon:Shield,    color:"#059669", label:"Security-Embedded",        desc:"Zero-trust networking, supply chain, and auto-compliance" },
-  { icon:Zap,       color:"#d97706", label:"MTTR Obsessed",            desc:"45 min → 8 min via AIOps + runbook automation" },
-  { icon:Globe,     color:"#db2777", label:"Multi-Cloud Native",       desc:"Vendor-neutral architecture across AWS, GCP, and Azure" },
-  { icon:TrendingUp,color:"#0891b2", label:"FinOps Champion",          desc:"$5M+ cloud savings via rightsizing and spot strategy" },
+  { icon:Server,    color:"#2563eb", label:"Full-Stack Builder",  desc:"Designing and shipping end-to-end web and backend systems with strong product thinking." },
+  { icon:GitBranch, color:"#7c3aed", label:"Cloud-Native Mindset", desc:"Working with Docker, Kubernetes, CI/CD, and deployment workflows from code to production." },
+  { icon:Shield,    color:"#059669", label:"Security-Aware",      desc:"Applying secure engineering practices, DevSecOps thinking, and real security tooling." },
+  { icon:Zap,       color:"#d97706", label:"Fast Learner",        desc:"Exploring modern engineering practices across AI, cloud, and scalable software systems." },
+  { icon:Globe,     color:"#db2777", label:"Research Driven",     desc:"Combining software engineering with applied ML and intelligent systems research." },
+  { icon:TrendingUp,color:"#0891b2", label:"Systems Thinking",    desc:"Designing tools that balance performance, security, reliability, and usability." },
 ];
 
 function FadeIn({ children, delay=0 }: { children: React.ReactNode; delay?: number }) {
@@ -31,11 +30,9 @@ export default function AboutSection() {
         <FadeIn>
           <div className="text-center mb-16">
             <div className="section-label mb-3">About</div>
-            {/* TODO: Update section title */}
             <h2 className="section-title text-4xl sm:text-5xl mb-4">
-              Infra that <span className="gradient-text">scales</span>
+              Building <span className="gradient-text">systems</span> that matter
             </h2>
-            {/* TODO: Update summary text */}
             <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
               {PERSONAL.bio}
             </p>

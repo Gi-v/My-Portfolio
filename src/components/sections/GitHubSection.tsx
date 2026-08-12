@@ -52,7 +52,7 @@ export default function GitHubSection() {
         <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6 }} className="text-center mb-16">
           <div className="section-label mb-3">Open Source</div>
           <h2 className="section-title text-4xl sm:text-5xl mb-4">GitHub Activity</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Live stats pulled from the GitHub API. Building in public for the DevOps community.</p>
+          <p className="text-slate-500 max-w-xl mx-auto">Live stats pulled from the GitHub API. Building in public across software engineering, ML, and cloud-native projects.</p>
         </motion.div>
 
         {/* Stats */}
@@ -111,7 +111,6 @@ export default function GitHubSection() {
         </div>
 
         <div className="text-center mt-8">
-          {/* TODO: Update GitHub URL */}
           <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-600 hover:border-blue-200 hover:text-blue-600 transition-all shadow-sm">
             <Github className="w-4 h-4" />View GitHub Profile

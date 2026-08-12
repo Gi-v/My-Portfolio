@@ -14,7 +14,7 @@ export default function CertificationsSection() {
         <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}} transition={{ duration:0.6 }} className="text-center mb-16">
           <div className="section-label mb-3">Credentials</div>
           <h2 className="section-title text-4xl sm:text-5xl mb-4">Certifications</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">Industry credentials validating expertise across cloud platforms and DevOps engineering.</p>
+          <p className="text-slate-500 max-w-xl mx-auto">Foundational cloud and agile training that supports my engineering and systems work.</p>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {CERTIFICATIONS.map((c, i) => {

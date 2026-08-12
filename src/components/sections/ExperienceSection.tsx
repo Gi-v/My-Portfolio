@@ -84,9 +84,8 @@ export default function ExperienceSection() {
         <motion.div ref={ref} initial={{ opacity:0, y:20 }} animate={inView?{opacity:1,y:0}:{}}
           transition={{ duration:0.6, ease:[0.22,1,0.36,1] }} className="text-center mb-16">
           <div className="section-label mb-3">Career</div>
-          {/* TODO: Update years of experience */}
           <h2 className="section-title text-4xl sm:text-5xl mb-4">Experience</h2>
-          <p className="text-slate-500 max-w-lg mx-auto">8+ years shipping production infrastructure at high-growth tech companies.</p>
+          <p className="text-slate-500 max-w-lg mx-auto">Working across software engineering, secure systems, AI-powered tooling, and cloud-native development.</p>
         </motion.div>
 
         <div className="space-y-8">

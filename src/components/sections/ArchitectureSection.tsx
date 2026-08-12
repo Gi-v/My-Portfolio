@@ -3,13 +3,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-// TODO: Customize the architecture diagrams to reflect your real infrastructure
-
 type Tab = "platform" | "cicd" | "gitops";
 const TABS: { id:Tab; label:string; desc:string }[] = [
-  { id:"platform", label:"Cloud Platform",   desc:"Multi-cloud Kubernetes platform with service mesh and policy engine" },
-  { id:"cicd",     label:"CI/CD Pipeline",   desc:"SLSA Level 3 compliant pipeline with signed artifacts" },
-  { id:"gitops",   label:"GitOps Flow",      desc:"Declarative ArgoCD-driven deployment with drift detection" },
+  { id:"platform", label:"Cloud Platform",   desc:"Full-stack and ML workloads running in containerized, production-ready environments" },
+  { id:"cicd",     label:"CI/CD Pipeline",   desc:"Automated build, test, and deployment patterns for modern application delivery" },
+  { id:"gitops",   label:"GitOps Flow",      desc:"Declarative delivery, traceability, and operational consistency across software environments" },
 ];
 
 /* ── Platform Diagram ───────────────────────────────────── */
