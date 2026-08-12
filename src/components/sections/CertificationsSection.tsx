@@ -4,8 +4,6 @@ import { useInView } from "react-intersection-observer";
 import { CheckCircle, Award } from "lucide-react";
 import { CERTIFICATIONS } from "@/lib/config";
 
-// TODO: EDIT HERE — update CERTIFICATIONS in lib/config.ts
-
 export default function CertificationsSection() {
   const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });
   return (

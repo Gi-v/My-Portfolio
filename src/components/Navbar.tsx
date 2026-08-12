@@ -21,8 +21,6 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm py-3" : "bg-transparent py-5"}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Logo */}
-        {/* TODO: Update name */}
         <a href="#" className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm shadow-blue-200">
             <Terminal className="w-4 h-4 text-white" />
@@ -43,7 +41,6 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          {/* TODO: Remove or keep resume button */}
           <a href={SOCIAL.resume} download className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition-all shadow-sm shadow-blue-200">
             <Download className="w-3.5 h-3.5" />Resume
           </a>

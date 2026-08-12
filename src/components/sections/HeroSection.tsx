@@ -55,7 +55,6 @@ export default function HeroSection() {
           <div className="space-y-8">
             {/* Profile image + name block */}
             <div ref={imgRef} className="flex items-center gap-5" style={{opacity:0}}>
-              {/* TODO: Drop your photo at /public/profile.jpg */}
               <div className="relative flex-shrink-0">
                 <div className="w-20 h-20 rounded-2xl overflow-hidden ring-4 ring-white shadow-xl shadow-blue-100/60">
                   <Image
@@ -103,8 +102,6 @@ export default function HeroSection() {
                 </h2>
               </div>
 
-              {/* Bio */}
-              {/* TODO: Update bio text */}
               <p style={{opacity:0}} className="text-slate-500 text-lg leading-relaxed max-w-md">
                 {PERSONAL.bio}
               </p>

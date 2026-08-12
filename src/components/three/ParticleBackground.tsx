@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 export default function AuroraBackground() {
   return (
     <div className="aurora" aria-hidden="true">
-      {/* TODO: Adjust colors to match your brand */}
       <div className="aurora-blob w-[700px] h-[700px] bg-blue-200/60 top-[-10%] left-[-5%]" style={{ animationDelay:"0s" }} />
       <div className="aurora-blob w-[500px] h-[500px] bg-violet-200/50 top-[20%] right-[-5%]" style={{ animationDelay:"-7s" }} />
       <div className="aurora-blob w-[400px] h-[400px] bg-sky-200/40 bottom-[10%] left-[20%]" style={{ animationDelay:"-14s" }} />

@@ -4,9 +4,6 @@ import { useInView } from "react-intersection-observer";
 import { Clock, ArrowRight, BookOpen } from "lucide-react";
 import { BLOG_POSTS, SOCIAL } from "@/lib/config";
 
-// TODO: EDIT HERE — update BLOG_POSTS in lib/config.ts
-// Or connect to Dev.to API: fetch(`https://dev.to/api/articles?username=${YOUR_USERNAME}`)
-
 export default function BlogSection() {
   const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });
   return (
@@ -44,7 +41,6 @@ export default function BlogSection() {
           })}
         </div>
         <div className="text-center mt-10">
-          {/* TODO: Update Dev.to URL */}
           <a href={SOCIAL.devto} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-600 hover:border-blue-200 hover:text-blue-600 transition-all shadow-sm">
             <BookOpen className="w-4 h-4" />All articles on Dev.to<ArrowRight className="w-3.5 h-3.5 opacity-50" />

@@ -1,10 +1,8 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { TOOLKIT } from "@/lib/config";
-
-// TODO: EDIT HERE — update TOOLKIT in lib/config.ts to match your real skills
 
 function ToolkitCard({ cat, i }: { cat: typeof TOOLKIT[0]; i: number }) {
   const { ref, inView } = useInView({ threshold:0.1, triggerOnce:true });

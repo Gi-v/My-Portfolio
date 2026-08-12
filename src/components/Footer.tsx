@@ -1,8 +1,7 @@
 "use client";
 import { Terminal, Heart } from "lucide-react";
-import { PERSONAL, SOCIAL, NAV_LINKS } from "@/lib/config";
+import { PERSONAL, NAV_LINKS } from "@/lib/config";
 
-// TODO: Update name and links
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-white/80 backdrop-blur-xl py-12 px-4 sm:px-6 lg:px-8">

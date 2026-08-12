@@ -6,8 +6,6 @@ import { Github, Star, GitFork, Code2, Activity, Users } from "lucide-react";
 import { useGitHubStats, useGitHubRepos, LANG_COLORS } from "@/lib/hooks/useGitHub";
 import { SOCIAL } from "@/lib/config";
 
-// TODO: EDIT HERE — update GITHUB_USERNAME in lib/config.ts for live data
-
 function ContributionGraph() {
   const cells = useMemo(() => {
     let seed = 42;

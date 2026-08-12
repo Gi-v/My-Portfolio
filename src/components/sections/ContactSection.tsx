@@ -2,12 +2,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Mail, Github, Linkedin, Twitter, Send, MapPin, Download, CheckCircle } from "lucide-react";
+import { Mail, Github, Linkedin, Send, MapPin, Download, CheckCircle } from "lucide-react";
 import { PERSONAL, SOCIAL } from "@/lib/config";
 import { toast } from "sonner";
-
-// TODO: EDIT HERE — wire up a real email service (Resend, SendGrid, etc.)
-// Add your API route at src/app/api/contact/route.ts and POST to it from handleSubmit
 
 export default function ContactSection() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
@@ -18,8 +15,6 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    // TODO: Replace with real API call:
-    // await fetch("/api/contact", { method:"POST", body: JSON.stringify(form) })
     await new Promise(r => setTimeout(r, 1400));
     setSending(false); setSent(true);
     toast.success("Message sent! I'll reply within 24 hours.");
@@ -77,8 +72,6 @@ export default function ContactSection() {
               </a>
             ))}
 
-            {/* Resume download */}
-            {/* TODO: Place resume at /public/resume.pdf */}
             <a href={SOCIAL.resume} download
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-sm transition-all group">
               <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />

@@ -4,7 +4,6 @@ import { useInView } from "react-intersection-observer";
 import { Github, ExternalLink, Server, Box, Shield, Activity, DollarSign, Zap } from "lucide-react";
 import { PROJECTS, SOCIAL } from "@/lib/config";
 
-// TODO: EDIT HERE — update PROJECTS array in lib/config.ts
 const ICONS: Record<string,React.ElementType> = { cluster:Server, terraform:Box, shield:Shield, monitor:Activity, cost:DollarSign, chaos:Zap };
 
 function ProjectCard({ p, i }: { p: typeof PROJECTS[0]; i: number }) {

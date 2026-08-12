@@ -89,7 +89,6 @@ export default function ExperienceSection() {
         </motion.div>
 
         <div className="space-y-8">
-          {/* TODO: EDIT HERE — add/remove jobs in lib/config.ts EXPERIENCE array */}
           {EXPERIENCE.map((job, i) => <Entry key={job.company} job={job} i={i} />)}
         </div>
       </div>
